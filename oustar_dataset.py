@@ -144,8 +144,9 @@ class OustarDataset:
         # pointcloud = pointcloud.transpose(1,0)
         # ================ PCL ================
         pointcloud = pcl.load_XYZI(path)
+
         # pointcloud = pcl.load_XYZI(unorganized_path)
-        pointcloud = np.asarray(pointcloud)
+        pointcloud = np.asarray(pointcloud, dtype=np.float32)
         return pointcloud
 
 if __name__ == '__main__':

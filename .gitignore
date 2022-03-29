@@ -1,1 +1,4 @@
 pcd_to_bin/build/
+__pycache__/
+oustar/
+kitti/
