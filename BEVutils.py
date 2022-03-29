@@ -19,6 +19,7 @@ y (used with x lidar)
 # np.set_printoptions(threshold=np.inf)
 
 # =========================  Config ===============================
+# Note that min & max should be -ve to each other, ex: if maxY=25, so minY must=-25/ or one of them is 0
 boundary = {
     "minX": -25,
     "maxX": 25,

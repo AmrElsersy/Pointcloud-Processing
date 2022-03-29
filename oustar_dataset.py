@@ -68,6 +68,10 @@ class OustarDataset:
             box = BBox3D(x,y,z, h,w,l, rotation)
             box.coordinates = Coordinates.LIDAR
             class_name = object_key_to_class[classKey]
+
+            if class_name == 'car':
+                class_name = 'Car'
+
             oustar_object = LabelObject(box, class_name)
 
             oustar_objects.append(oustar_object)
@@ -82,7 +86,7 @@ class OustarDataset:
             Return:
                 Python Dict contains the json readings
         '''
-        with open(self.labels_paths[0]) as json_file:
+        with open(path) as json_file:
             labels_json = json.load(json_file)
         return labels_json
 
@@ -136,19 +140,6 @@ class OustarDataset:
         # pointcloud = pcl.load_XYZI(unorganized_path)
         pointcloud = np.asarray(pointcloud)
         return pointcloud
-
-    def visualize(self, pointcloud, boxes):
-        # MayAvi
-        colors = pointcloud[:, 2] # colors by z
-        # colors = pointcloud[:, 2] # colors by intensity
-        self.figure = mlab.figure(bgcolor=(0,0,0), fgcolor=(1,1,1), size=(1280, 720))
-        mlab.points3d(pointcloud[:,0], pointcloud[:,1], pointcloud[:,2], colors,
-                     mode="point", color=None, figure=self.figure)
-        mlab.show(stop=True)
-
-        for box in boxes:
-            # draw box
-            print(box)
 
 if __name__ == '__main__':
     import argparse

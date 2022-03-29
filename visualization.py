@@ -15,7 +15,7 @@ class Visualizer:
         self.__scene_2D_mode = False
         self.scene_2D_width = 750
         self.ground_truth_color = (0,1,0) # green
-        self.thickness = 3
+        self.thickness = 2
         self.user_press = None
         self.confidence_score_thresh = 0.3
 
@@ -86,7 +86,6 @@ class Visualizer:
 
         # clip boxes
         objects = BEVutils.clip_3d_boxes(objects, calib)
-
         # 3D Boxes of model output
         for obj in objects:
             color = self.__get_box_color(obj.label)
@@ -96,9 +95,8 @@ class Visualizer:
         if labels is not None:
             labels = BEVutils.clip_3d_boxes(labels, calib)
             for obj in labels:
-                color = [c * 255 for c in self.ground_truth_color]
+                color = self.__get_box_color(obj.label)
                 self.__draw_bev_box3d(BEV, obj.bbox_3d, color, calib)
-
         if self.__scene_2D_mode:
             return BEV
 
@@ -356,7 +354,7 @@ class Visualizer:
             class_id = class_name_to_label(class_id)
 
         colors = [
-            (0.8, 0.2, 0.7),
+            (0.2, 0.0, 1),
             (0.3,0.9,0.1),
             (1,1,0.3),
         ]
@@ -396,15 +394,17 @@ class Visualizer:
         return corners
 
 
-def kitti():
+def kitti(path='kitti'):
     from KittiDataset import KittiDataset
-    dataset = KittiDataset('/home/amrelsersy/SFA3D/dataset/kitti/testing')
+    dataset = KittiDataset(path)
     visualizer = Visualizer()
-
+    print(len(dataset))
     for i in range(len(dataset)):
         image, pointcloud, labels, calib = dataset[i]
         # visualizer.visualize_scene_3D(pointcloud, labels)
-        # visualizer.visualize_scene_bev(pointcloud, labels)
+        print(pointcloud.shape, labels, calib)
+
+        visualizer.visualize_scene_bev(pointcloud, [], labels=labels, calib=calib)
 
         if visualizer.user_press == 27:
             exit()

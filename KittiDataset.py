@@ -8,22 +8,13 @@ import cv2
 from KittiUtils import *
 from PIL import Image
 
-class KittiDataset(Dataset):
-    def __init__(self, root="../data/kitti/testing", mode='train', transform = None, stereo_mode=False):
-        self.root = root
-        self.stereo_mode = stereo_mode
-        self.mode = mode
 
-        start_idx = 0
-        end_idx = None
-        if self.mode == 'train':
-            end_idx = 6000
-        elif self.mode == 'val':
-            start_idx = 6000
-        elif self.mode == 'test':
-            end_idx = None
-        else:
-            raise ValueError()
+KITTI_DATASET_ROOT = "../Kitti"
+
+class KittiDataset(Dataset):
+    def __init__(self, root=KITTI_DATASET_ROOT, mode='train'):
+        self.root = root
+        self.mode = mode
 
         self.rootPointclouds = os.path.join(self.root, "velodyne")
         self.rootImages = os.path.join(self.root, "image_2")
@@ -31,29 +22,50 @@ class KittiDataset(Dataset):
             self.rootAnnotations = os.path.join(self.root, "label_2")
         self.rootCalibration = os.path.join(self.root, "calib")
 
-        self.imagesNames      = sorted(os.listdir(self.rootImages)) [start_idx : end_idx]
+        n = len(os.listdir(self.rootPointclouds))
+
+        start_idx = 0
+        end_idx = None
+        if self.mode == 'train':
+            end_idx = int(6000/7500 * n)
+        elif self.mode == 'val':
+            start_idx = int(6000/7500 * n)
+        elif self.mode == 'test':
+            end_idx = None
+        else:
+            raise ValueError()
+
+        self.with_images = True
+        if not os.path.exists(self.rootImages):
+            self.with_images = False
+        if start_idx == end_idx:
+            end_idx = None
+
+        print(n, start_idx, end_idx, self.with_images)
         self.pointCloudNames  = sorted(os.listdir(self.rootPointclouds))[start_idx : end_idx]
+        self.calibrationNames = sorted(os.listdir(self.rootCalibration))[start_idx : end_idx]
         if self.mode != 'test':
             self.annotationNames  = sorted(os.listdir(self.rootAnnotations))[start_idx : end_idx]
-        self.calibrationNames = sorted(os.listdir(self.rootCalibration))[start_idx : end_idx]
-
-        if self.stereo_mode:
-            self.rootRightImages = os.path.join(self.root, "image_3")
-            self.rightImagesNames = sorted(os.listdir(self.rootRightImages))[start_idx : end_idx]
+        if self.with_images:
+            self.imagesNames      = sorted(os.listdir(self.rootImages)) [start_idx : end_idx]
 
     def __getitem__(self, index):
-        imagePath = os.path.join(self.rootImages, self.imagesNames[index])
         pointcloudPath = os.path.join(self.rootPointclouds, self.pointCloudNames[index])
         if self.mode != 'test':
             annotationPath = os.path.join(self.rootAnnotations, self.annotationNames[index])
         calibrationPath = os.path.join(self.rootCalibration, self.calibrationNames[index])
 
-        image = self.read_image_cv2(imagePath)
         pointcloud = self.read_pointcloud_bin(pointcloudPath)
         if self.mode != 'test':
             labels = self.read_labels_annotations(annotationPath)
             labels = self.convert_to_kitti_objects(labels)
         calib = KittiCalibration(calib_path=calibrationPath)
+
+        if self.with_images:
+            imagePath = os.path.join(self.rootImages, self.imagesNames[index])
+            image = self.read_image_cv2(imagePath)
+        else:
+            image = None
 
         if self.mode == 'test':
             return image, pointcloud, calib
@@ -61,7 +73,7 @@ class KittiDataset(Dataset):
         return image, pointcloud, labels, calib
 
     def __len__(self):
-        return len(self.imagesNames)
+        return len(self.pointCloudNames)
 
     def read_pointcloud_bin(self, path):
         # read .bin and convert to tensor
