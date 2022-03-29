@@ -79,7 +79,6 @@ def convert_oustar_to_kitti(args):
         save_pointcloud_kitti_format(pointcloud, pointclouds_path, name_str)
         save_labels_kitti_format(labels, labels_path, name_str)
         save_calib_kitti_format(calibs_path, name_str)
-        exit()
 
         name_i +=1
 

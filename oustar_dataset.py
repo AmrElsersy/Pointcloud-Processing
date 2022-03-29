@@ -22,6 +22,13 @@ class OustarDataset:
         self.pointclouds_paths = [os.path.join(pointclouds_path, path) for path in self.pointclouds_paths]
 
     def __getitem__(self, index):
+        '''
+            Get Sample of the dataset by the givin index, Operator overloading of [] operator
+            Arguments:
+                index: index of the sample in the dataset
+            Return:
+                Pointcloud numpy array of shape (N, 4) and LabelObject array contains the boxes
+        '''
         path_pointcloud = self.pointclouds_paths[index]
         path_labels = self.labels_paths[index]
         pointcloud = self.load_pcd_pointcloud(path_pointcloud)
