@@ -1,7 +1,0 @@
-[
-{
-  "directory": "/home/amrelsersy/oustar/pcd_to_bin/build",
-  "command": "/bin/g++-9  -DDISABLE_LIBUSB_1_0 -DDISABLE_PCAP -DDISABLE_PNG -Dqh_QHpointer -DvtkRenderingContext2D_AUTOINIT=\"1(vtkRenderingContextOpenGL2)\" -DvtkRenderingCore_AUTOINIT=\"3(vtkInteractionStyle,vtkRenderingFreeType,vtkRenderingOpenGL2)\" -isystem /usr/include/vtk-7.1 -isystem /usr/include/freetype2 -isystem /usr/include/pcl-1.10 -isystem /usr/include/eigen3 -isystem /usr/include/ni -isystem /usr/include/openni2    -g   -std=c++17 -o CMakeFiles/pcd_to_bin.dir/convert_pcd_to_bin.cpp.o -c /home/amrelsersy/oustar/pcd_to_bin/convert_pcd_to_bin.cpp",
-  "file": "/home/amrelsersy/oustar/pcd_to_bin/convert_pcd_to_bin.cpp"
-}
-]

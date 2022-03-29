@@ -60,15 +60,15 @@ include CMakeFiles/pcd_to_bin.dir/flags.make
 CMakeFiles/pcd_to_bin.dir/convert_pcd_to_bin.cpp.o: CMakeFiles/pcd_to_bin.dir/flags.make
 CMakeFiles/pcd_to_bin.dir/convert_pcd_to_bin.cpp.o: ../convert_pcd_to_bin.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/amrelsersy/oustar/pcd_to_bin/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/pcd_to_bin.dir/convert_pcd_to_bin.cpp.o"
-	/bin/g++-9  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/pcd_to_bin.dir/convert_pcd_to_bin.cpp.o -c /home/amrelsersy/oustar/pcd_to_bin/convert_pcd_to_bin.cpp
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/pcd_to_bin.dir/convert_pcd_to_bin.cpp.o -c /home/amrelsersy/oustar/pcd_to_bin/convert_pcd_to_bin.cpp
 
 CMakeFiles/pcd_to_bin.dir/convert_pcd_to_bin.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pcd_to_bin.dir/convert_pcd_to_bin.cpp.i"
-	/bin/g++-9 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/amrelsersy/oustar/pcd_to_bin/convert_pcd_to_bin.cpp > CMakeFiles/pcd_to_bin.dir/convert_pcd_to_bin.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/amrelsersy/oustar/pcd_to_bin/convert_pcd_to_bin.cpp > CMakeFiles/pcd_to_bin.dir/convert_pcd_to_bin.cpp.i
 
 CMakeFiles/pcd_to_bin.dir/convert_pcd_to_bin.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pcd_to_bin.dir/convert_pcd_to_bin.cpp.s"
-	/bin/g++-9 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/amrelsersy/oustar/pcd_to_bin/convert_pcd_to_bin.cpp -o CMakeFiles/pcd_to_bin.dir/convert_pcd_to_bin.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/amrelsersy/oustar/pcd_to_bin/convert_pcd_to_bin.cpp -o CMakeFiles/pcd_to_bin.dir/convert_pcd_to_bin.cpp.s
 
 # Object files for target pcd_to_bin
 pcd_to_bin_OBJECTS = \
