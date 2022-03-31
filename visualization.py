@@ -90,6 +90,8 @@ class Visualizer:
         for obj in objects:
             color = self.__get_box_color(obj.label)
             self.__draw_bev_box3d(BEV, obj.bbox_3d, color, calib)
+            if abs(obj.bbox_3d.rotation) > 0.1:
+                print("rotation= ", obj.bbox_3d.rotation, 'dims ', obj.bbox_3d.dims)
 
         # # 3D Boxes of dataset labels
         if labels is not None:
@@ -404,7 +406,7 @@ def kitti(path='kitti'):
         # visualizer.visualize_scene_3D(pointcloud, labels)
         print(pointcloud.shape, labels, calib)
 
-        visualizer.visualize_scene_bev(pointcloud, [], labels=labels, calib=calib)
+        visualizer.visualize_scene_bev(pointcloud, labels, labels=None, calib=calib)
 
         if visualizer.user_press == 27:
             exit()

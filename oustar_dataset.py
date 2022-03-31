@@ -6,7 +6,7 @@ import pcl
 
 from KittiUtils import LabelObject, BBox3D, Coordinates
 
-OUSTAR_DATASET_ROOT = './oustar'
+OUSTAR_DATASET_ROOT = './oustar/parking ouster 1/parking ouster2'
 
 class OustarDataset:
     def __init__(self, root = OUSTAR_DATASET_ROOT):
