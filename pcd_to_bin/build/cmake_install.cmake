@@ -1,4 +1,4 @@
-# Install script for directory: /home/amrelsersy/oustar/pcd_to_bin
+# Install script for directory: /home/omen/pointpillars/kitti/Pointcloud-Processing/pcd_to_bin
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/amrelsersy/oustar/pcd_to_bin/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/omen/pointpillars/kitti/Pointcloud-Processing/pcd_to_bin/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

@@ -268,7 +268,8 @@ def class_name_to_label(classname):
 
         'Misc' : 0,
         'Tram' : 0,
-        'parking ouster 2': 1
+        'parking ouster 2': 1,
+        'parking':1
     }
     return class_to_label[classname]
 

@@ -396,7 +396,7 @@ class Visualizer:
         return corners
 
 
-def kitti(path='kitti'):
+def kitti(path='../training/kitti'):
     from KittiDataset import KittiDataset
     dataset = KittiDataset(path)
     visualizer = Visualizer()
@@ -411,10 +411,10 @@ def kitti(path='kitti'):
         if visualizer.user_press == 27:
             exit()
 
-def oustar(mode = 'bev'):
+def oustar(path= '../training/', mode = 'bev'):
     from oustar_dataset import OustarDataset
 
-    dataset = OustarDataset()
+    dataset = OustarDataset(path)
     visualizer = Visualizer()
 
     for i in range(len(dataset)):
