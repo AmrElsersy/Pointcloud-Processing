@@ -90,8 +90,10 @@ class Visualizer:
         for obj in objects:
             color = self.__get_box_color(obj.label)
             self.__draw_bev_box3d(BEV, obj.bbox_3d, color, calib)
-            if abs(obj.bbox_3d.rotation) > 0.1:
-                print("rotation= ", obj.bbox_3d.rotation, 'dims ', obj.bbox_3d.dims)
+
+            # if abs(obj.bbox_3d.rotation) > 0.1:
+            print("rotation= ", obj.bbox_3d.rotation, ' .. width=', obj.bbox_3d.width, ' .. length=', obj.bbox_3d.length)
+        print("===========================")
 
         # # 3D Boxes of dataset labels
         if labels is not None:
@@ -173,7 +175,7 @@ class Visualizer:
         c2 = BEVutils.corner_to_bev_coord(corners[2])
         c3 = BEVutils.corner_to_bev_coord(corners[3])
 
-        cv2.line(bev, (c0[0], c0[1]), (c1[0], c1[1]), color, self.thickness)
+        cv2.line(bev, (c0[0], c0[1]), (c1[0], c1[1]), (255,0,0), self.thickness)
         cv2.line(bev, (c0[0], c0[1]), (c2[0], c2[1]), color, self.thickness)
         cv2.line(bev, (c3[0], c3[1]), (c1[0], c1[1]), color, self.thickness)
         cv2.line(bev, (c3[0], c3[1]), (c2[0], c2[1]), color, self.thickness)
@@ -405,13 +407,13 @@ def kitti(path='kitti'):
         image, pointcloud, labels, calib = dataset[i]
         # visualizer.visualize_scene_3D(pointcloud, labels)
         print(pointcloud.shape, labels, calib)
-
+        print('image.shape ',image.shape)
         visualizer.visualize_scene_bev(pointcloud, labels, labels=None, calib=calib)
 
         if visualizer.user_press == 27:
             exit()
 
-def oustar(mode = 'bev'):
+def ouster(mode = 'bev'):
     from oustar_dataset import OustarDataset
 
     dataset = OustarDataset()

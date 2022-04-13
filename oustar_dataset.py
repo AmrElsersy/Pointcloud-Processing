@@ -67,7 +67,7 @@ class OustarDataset:
             x = geometry['position']['x']
             y = geometry['position']['y']
             z = geometry['position']['z']
-            rotation = geometry['rotation']['y']
+            rotation = geometry['rotation']['z']
             w = geometry['dimensions']['x']
             l = geometry['dimensions']['y']
             h = geometry['dimensions']['z']
