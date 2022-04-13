@@ -1,0 +1,10 @@
+### For Ouster
+python3 visualization.py ouster oustar/Os1_32/OS1-32_3rd_batch/
+
+### For Kitti
+python3 visualization.py kitti /home/amrelsersy/Kitti
+
+### Convert PCDs to Bins pointclouds in Ouster
+mkdir build & cd build
+cmake ..; make
+./pcd_to_bin /home/amrelsersy/oustar/oustar/Os1_32/OS1-32_3rd_batch/pointcloud
