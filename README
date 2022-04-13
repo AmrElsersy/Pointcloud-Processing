@@ -8,3 +8,6 @@ python3 visualization.py kitti /home/amrelsersy/Kitti
 mkdir build & cd build
 cmake ..; make
 ./pcd_to_bin /home/amrelsersy/oustar/oustar/Os1_32/OS1-32_3rd_batch/pointcloud
+
+### Convert Ouster to Kitti full dataset
+python3 oustar_to_kitti.py --oustar_path oustar/Os1_32/OS1-32_3rd_batch/
