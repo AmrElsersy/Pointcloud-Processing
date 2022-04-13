@@ -2,8 +2,12 @@ import numpy as np
 import sys
 sys.path.insert(0, '../')
 from visualization import Visualizer
+import argparse
 
-path = 'oustar/pointclouds/1645619652.853595401.bin'
+parser = argparse.ArgumentParser()
+parser.add_argument('path', type=str, default='../kitti/dataset/training/pointclouds/000000.bin')
+args = parser.parse_args()
+path = args.path
 
 pointcloud = np.fromfile(path, dtype=np.float32).reshape(-1, 4)
 

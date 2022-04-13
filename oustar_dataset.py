@@ -12,8 +12,8 @@ class OustarDataset:
     def __init__(self, root = OUSTAR_DATASET_ROOT):
         self.root = root
 
-        labels_path = os.path.join(self.root, "labels")
-        pointclouds_path = os.path.join(self.root, "pointclouds")
+        labels_path = os.path.join(self.root, "ann")
+        pointclouds_path = os.path.join(self.root, "pointclouds_bin")
 
         self.labels_paths = sorted(os.listdir(labels_path))
         self.pointclouds_paths = sorted(os.listdir(pointclouds_path))
@@ -31,7 +31,7 @@ class OustarDataset:
         '''
         path_pointcloud = self.pointclouds_paths[index]
         path_labels = self.labels_paths[index]
-        pointcloud = self.load_pcd_pointcloud(path_pointcloud)
+        pointcloud = self.load_bin_pointcloud(path_pointcloud)
         labels = self.load_json_labels(path_labels)
         oustar_labels = self.parse_labels(labels)
 
@@ -71,13 +71,13 @@ class OustarDataset:
             w = geometry['dimensions']['x']
             l = geometry['dimensions']['y']
             h = geometry['dimensions']['z']
-
+            print(x,y,z,w,h,l, rotation)
             box = BBox3D(x,y,z, h,w,l, rotation)
             box.coordinates = Coordinates.LIDAR
             class_name = object_key_to_class[classKey]
 
-            if class_name == 'car':
-                class_name = 'Car'
+            # if class_name == 'car' or class_name =='parking slots 2':
+            class_name = 'Car'
 
             oustar_object = LabelObject(box, class_name)
 

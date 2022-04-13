@@ -1,9 +1,11 @@
 import pwd
+import cv2
 import numpy as np
 from oustar_dataset import OustarDataset
 import argparse
 import os
 from KittiUtils import LabelObject, BBox3D
+import matplotlib.pyplot as plt
 
 def save_file(text, path, file_name):
     file_path = os.path.join(path, file_name+'.txt')
@@ -33,7 +35,7 @@ def save_labels_kitti_format(labels, path, file_name):
         box = label.bbox_3d
 
         label_str = [class_name,
-                     0.0, 0.0, 0.0, # trunsacted, occlution, observation
+                     0.0, 0, 0.0, # trunsacted, occlution, observation
                      0.0 ,0.0 ,0.0 ,0.0 , # 2d image box
                      box.height, box.width, box.length,
                      box.x, box.y, box.z, box.rotation]
@@ -58,6 +60,16 @@ def save_calib_kitti_format(path, file_name):
     text = '\n'.join(text)
     save_file(text, path, file_name)
 
+
+def save_image(images_path, name_str):
+    if not os.path.exists(images_path):
+        os.makedirs(images_path)
+
+    full_path = os.path.join(images_path, name_str + '.png')
+    image = np.zeros((384, 1248), dtype=np.int)
+    print(full_path)
+    cv2.imwrite(full_path, image)
+
 def convert_oustar_to_kitti(args):
     oustar_path = args.oustar_path
     kitti_path = args.kitti_path
@@ -67,6 +79,7 @@ def convert_oustar_to_kitti(args):
     pointclouds_path = os.path.join(kitti_path, 'velodyne')
     labels_path = os.path.join(kitti_path, 'label_2')
     calibs_path = os.path.join(kitti_path, 'calib')
+    images_path = os.path.join(kitti_path, 'image_2')
 
     name_i = 0
     for i in range(len(oustar)):
@@ -79,6 +92,7 @@ def convert_oustar_to_kitti(args):
         save_pointcloud_kitti_format(pointcloud, pointclouds_path, name_str)
         save_labels_kitti_format(labels, labels_path, name_str)
         save_calib_kitti_format(calibs_path, name_str)
+        save_image(images_path, name_str)
 
         name_i +=1
 
