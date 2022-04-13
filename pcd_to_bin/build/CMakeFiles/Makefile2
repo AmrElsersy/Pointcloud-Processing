@@ -44,10 +44,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/omen/pointpillars/kitti/Pointcloud-Processing/pcd_to_bin
+CMAKE_SOURCE_DIR = /home/amrelsersy/oustar/pcd_to_bin
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/omen/pointpillars/kitti/Pointcloud-Processing/pcd_to_bin/build
+CMAKE_BINARY_DIR = /home/amrelsersy/oustar/pcd_to_bin/build
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -74,14 +74,14 @@ clean: CMakeFiles/pcd_to_bin.dir/clean
 CMakeFiles/pcd_to_bin.dir/all:
 	$(MAKE) -f CMakeFiles/pcd_to_bin.dir/build.make CMakeFiles/pcd_to_bin.dir/depend
 	$(MAKE) -f CMakeFiles/pcd_to_bin.dir/build.make CMakeFiles/pcd_to_bin.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/omen/pointpillars/kitti/Pointcloud-Processing/pcd_to_bin/build/CMakeFiles --progress-num=1,2 "Built target pcd_to_bin"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/amrelsersy/oustar/pcd_to_bin/build/CMakeFiles --progress-num=1,2 "Built target pcd_to_bin"
 .PHONY : CMakeFiles/pcd_to_bin.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/pcd_to_bin.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/omen/pointpillars/kitti/Pointcloud-Processing/pcd_to_bin/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/amrelsersy/oustar/pcd_to_bin/build/CMakeFiles 2
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/pcd_to_bin.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/omen/pointpillars/kitti/Pointcloud-Processing/pcd_to_bin/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/amrelsersy/oustar/pcd_to_bin/build/CMakeFiles 0
 .PHONY : CMakeFiles/pcd_to_bin.dir/rule
 
 # Convenience name for target.

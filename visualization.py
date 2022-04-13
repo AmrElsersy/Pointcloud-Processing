@@ -413,7 +413,7 @@ def kitti(path='../training/kitti'):
         if visualizer.user_press == 27:
             exit()
 
-def oustar(path= '../training/', mode = 'bev'):
+def ouster(path= '../training/', mode = 'bev'):
     from oustar_dataset import OustarDataset
 
     dataset = OustarDataset(path)

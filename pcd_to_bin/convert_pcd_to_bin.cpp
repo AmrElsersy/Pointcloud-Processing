@@ -26,12 +26,23 @@ void savePointCloudBinary(pcl::PointCloud<pcl::PointXYZI>::Ptr pointcloud, std::
 }
 
 
-int main()
+int main(int argc, char** argv)
 {
     // std::string root = "../../../training/pointclouds/";
-    // std::string saveRoot = "../../../training/pointclouds_bin/";
-    std::string root = "../../../testing111/pointclouds/";
-    std::string saveRoot = "../../../testing111/pointclouds_bin/";
+    std::string root = "../../../testing111/pointclouds";
+    std::string saveRoot;
+
+    if (argc == 2)
+        root = argv[1];
+
+    if (root[root.size()-1] == '/')
+        saveRoot = root.substr(0, root.size()-1) + "_bin/";
+    else
+        saveRoot = root + "_bin/";
+
+    if (!std::filesystem::is_directory(saveRoot))
+        std::filesystem::create_directory(saveRoot);
+
     for (const auto & entry : fs::directory_iterator(root))
     {
         // extract the name of the pcd file

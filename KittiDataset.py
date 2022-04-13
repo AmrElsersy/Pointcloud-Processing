@@ -16,7 +16,8 @@ class KittiDataset(Dataset):
         self.root = root
         self.mode = mode
 
-        self.rootPointclouds = os.path.join(self.root, "velodyne_reduced")
+        self.rootPointclouds = os.path.join(self.root, "velodyne")
+        # self.rootPointclouds = os.path.join(self.root, "velodyne_reduced")
         self.rootImages = os.path.join(self.root, "image_2")
         if self.mode != 'test':
             self.rootAnnotations = os.path.join(self.root, "label_2")

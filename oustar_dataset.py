@@ -13,7 +13,7 @@ class OustarDataset:
         self.root = root
 
         labels_path = os.path.join(self.root, "ann")
-        pointclouds_path = os.path.join(self.root, "pointclouds_bin")
+        pointclouds_path = os.path.join(self.root, "pointcloud_bin")
 
         self.labels_paths = sorted(os.listdir(labels_path))
         self.pointclouds_paths = sorted(os.listdir(pointclouds_path))
