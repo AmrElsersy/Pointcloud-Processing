@@ -67,11 +67,11 @@ class OustarDataset:
             x = geometry['position']['x']
             y = geometry['position']['y']
             z = geometry['position']['z']
-            rotation = geometry['rotation']['y']
+            rotation = geometry['rotation']['z']
             w = geometry['dimensions']['x']
             l = geometry['dimensions']['y']
             h = geometry['dimensions']['z']
-            print(x,y,z,w,h,l, rotation)
+            # print(x,y,z,w,h,l, rotation)
             box = BBox3D(x,y,z, h,w,l, rotation)
             box.coordinates = Coordinates.LIDAR
             class_name = object_key_to_class[classKey]
