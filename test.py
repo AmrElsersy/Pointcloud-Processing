@@ -5,7 +5,7 @@ from visualization import Visualizer
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument('path', type=str, default='../kitti/dataset/training/pointclouds/000000.bin')
+parser.add_argument('--path', type=str, default='../kitti/dataset/training/pointclouds/000000.bin')
 args = parser.parse_args()
 path = args.path
 
@@ -16,9 +16,25 @@ print(pointcloud)
 
 import pandas as pd
 import matplotlib.pyplot as plt
+
+def filter_range(pc):
+        factor = 10
+        for i in range(4):
+                min_i = pc[:, i].mean() - factor * pc[:, i].std()
+                max_i = pc[:, i].mean() + factor * pc[:, i].std()
+                mask = np.where((pc[:, i] > min_i) & (pc[:, i] < max_i))[0]
+                print(pc.shape, mask)
+                pc = pc[mask]
+        return pc
+# pointcloud = filter_range(pointcloud)
+
 df = pd.DataFrame(pointcloud)
 print(df.describe())
-df.hist(bins=50)
+df_x = pd.DataFrame(pointcloud[:,0])
+df_y = pd.DataFrame(pointcloud[:,1])
+df_z = pd.DataFrame(pointcloud[:,2])
+df_i = pd.DataFrame(pointcloud[:,3])
+df.hist(bins=100)
 plt.show()
 
 # visualize pointcloud

@@ -15,7 +15,7 @@ class Visualizer:
         self.__scene_2D_mode = False
         self.scene_2D_width = 750
         self.ground_truth_color = (0,1,0) # green
-        self.thickness = 2
+        self.thickness = 1
         self.user_press = None
         self.confidence_score_thresh = 0.3
 
@@ -86,6 +86,9 @@ class Visualizer:
 
         # clip boxes
         objects = BEVutils.clip_3d_boxes(objects, calib)
+
+        # objects= objects[-5:]
+
         # 3D Boxes of model output
         for obj in objects:
             color = self.__get_box_color(obj.label)
@@ -137,7 +140,7 @@ class Visualizer:
 
             score_point = (point[0], point[1]-20)
             score_per_box = int(object.score * 100)
-            self.__draw_text_2D(f"Score: {score_per_box}", score_point, bbox_volume, color)
+            # self.__draw_text_2D(f"Score: {score_per_box}", score_point, bbox_volume, color)
 
         self.current_image = np.array(self.current_image)
         self.current_image = cv2.cvtColor(self.current_image, cv2.COLOR_RGB2BGR)
@@ -175,9 +178,10 @@ class Visualizer:
         c2 = BEVutils.corner_to_bev_coord(corners[2])
         c3 = BEVutils.corner_to_bev_coord(corners[3])
 
-        cv2.line(bev, (c0[0], c0[1]), (c1[0], c1[1]), (255,0,0), self.thickness)
+        cv2.line(bev, (c0[0], c0[1]), (c1[0], c1[1]), color, self.thickness)
         cv2.line(bev, (c0[0], c0[1]), (c2[0], c2[1]), color, self.thickness)
-        cv2.line(bev, (c3[0], c3[1]), (c1[0], c1[1]), color, self.thickness)
+        cv2.line(bev, (c3[0], c3[1]), (c1[0], c1[1]), (0,0,255), self.thickness)
+        # cv2.line(bev, (c3[0], c3[1]), (c1[0], c1[1]), color, self.thickness)
         cv2.line(bev, (c3[0], c3[1]), (c2[0], c2[1]), color, self.thickness)
 
     def __bev_to_colored_bev(self, bev):
@@ -301,6 +305,8 @@ class Visualizer:
             print("Invalid box format")
             return
 
+        # clr = [int(c * 255) for c in clr]
+        clr = tuple(clr)
         c0 = corners[0]
         c1 = corners[1]
         c2 = corners[2]
@@ -407,8 +413,8 @@ def kitti(path='../training/kitti'):
         image, pointcloud, labels, calib = dataset[i]
         # visualizer.visualize_scene_3D(pointcloud, labels)
         print(pointcloud.shape, labels, calib)
-        print('image.shape ',image.shape)
-        visualizer.visualize_scene_bev(pointcloud, labels, labels=None, calib=calib)
+        # print('image.shape ',image.shape)
+        visualizer.visualize_scene_2D(pointcloud, image, labels, labels=None, calib=calib)
 
         if visualizer.user_press == 27:
             exit()
