@@ -1,4 +1,5 @@
 import pwd
+from pydoc import describe
 import cv2
 import numpy as np
 from oustar_dataset import OustarDataset
@@ -70,10 +71,8 @@ def save_image(images_path, name_str):
     print(full_path)
     cv2.imwrite(full_path, image)
 
-def convert_oustar_to_kitti(args):
+def convert_oustar_to_kitti(args, kitti_path, indices):
     oustar_path = args.oustar_path
-    kitti_path = args.kitti_path
-
     oustar = OustarDataset(oustar_path)
 
     pointclouds_path = os.path.join(kitti_path, 'velodyne')
@@ -82,7 +81,7 @@ def convert_oustar_to_kitti(args):
     images_path = os.path.join(kitti_path, 'image_2')
 
     name_i = 0
-    for i in range(len(oustar)):
+    for i in indices:
         pointcloud, labels = oustar[i]
 
         n_digits = len(str(name_i))
@@ -95,10 +94,26 @@ def convert_oustar_to_kitti(args):
 
         name_i +=1
 
+def main(args):
+    split_percentage = args.split
+    kitti_path = args.kitti_path
+    ouster = OustarDataset(args.oustar_path)
+
+    N = len(ouster)
+    indices = range(N)
+    last_train_index = int(N * split_percentage)
+
+    train_indices = indices[0: last_train_index]
+    test_indices = indices[last_train_index:]
+
+    convert_oustar_to_kitti(args, os.path.join(kitti_path, "training"), train_indices)
+    convert_oustar_to_kitti(args, os.path.join(kitti_path, "testing"), test_indices)
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--oustar_path', type=str, default='./oustar')
     parser.add_argument('--kitti_path', type=str, default='./kitti')
+    parser.add_argument('--split', type=float, default=0.9)
     args = parser.parse_args()
 
-    convert_oustar_to_kitti(args)
+    main(args)
