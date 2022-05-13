@@ -34,7 +34,7 @@ class OustarDataset:
         pointcloud = self.load_bin_pointcloud(path_pointcloud)
         labels = self.load_json_labels(path_labels)
         oustar_labels = self.parse_labels(labels)
-
+        # print(path_pointcloud)
         return pointcloud, oustar_labels
 
     def __len__(self):
@@ -68,22 +68,54 @@ class OustarDataset:
             y = geometry['position']['y']
             z = geometry['position']['z']
             rotation = geometry['rotation']['z']
-            w = geometry['dimensions']['x']
-            l = geometry['dimensions']['y']
+            w = geometry['dimensions']['y']
+            l = geometry['dimensions']['x']
             h = geometry['dimensions']['z']
             # print(x,y,z,w,h,l, rotation)
+            rotation = self.__convert_to_kitti_rotation(rotation)
             box = BBox3D(x,y,z, h,w,l, rotation)
             box.coordinates = Coordinates.LIDAR
             class_name = object_key_to_class[classKey]
 
-            # if class_name == 'car' or class_name =='parking slots 2':
-            class_name = 'Car'
-
+            class_name = self.__converrt_to_kitti_class_names(class_name)
             oustar_object = LabelObject(box, class_name)
 
             oustar_objects.append(oustar_object)
 
         return oustar_objects
+
+    @staticmethod
+    def __convert_to_kitti_rotation(rotation):
+        '''
+            rotation in kitti is +ve clockwise & -ve unticlockwise
+            0 rotation level is the horizontal pointing to the right direction
+
+            ouster +ve is left(unticlockwise), -ve is right
+        '''
+        rotation -= np.pi / 2
+
+        # limit rotation to [-pi, pi]
+        if rotation >  np.pi:
+            rotation -= 2* np.pi
+        elif rotation < - np.pi:
+            rotation += 2* np.pi
+
+        if rotation < 0:
+            rotation = -np.pi - rotation
+        else:
+            rotation = np.pi - rotation
+
+        return rotation
+
+    @staticmethod
+    def __converrt_to_kitti_class_names(class_name):
+        kitti_class_names = {
+            "car": "Car",
+            "Car": "Car",
+            "truck": "Truck",
+            "bike": "Cyclist",
+        }
+        return kitti_class_names[class_name]
 
     def load_json_labels(self, path):
         '''

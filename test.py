@@ -30,10 +30,6 @@ def filter_range(pc):
 
 df = pd.DataFrame(pointcloud)
 print(df.describe())
-df_x = pd.DataFrame(pointcloud[:,0])
-df_y = pd.DataFrame(pointcloud[:,1])
-df_z = pd.DataFrame(pointcloud[:,2])
-df_i = pd.DataFrame(pointcloud[:,3])
 df.hist(bins=100)
 plt.show()
 

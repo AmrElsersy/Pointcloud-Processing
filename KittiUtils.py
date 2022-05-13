@@ -257,15 +257,16 @@ class KittiCalibration:
 # ================================================
 def class_name_to_label(classname):
     class_to_label = {
-        'Pedestrian': 0,
-        'Person_sitting': 0,
         'car':1,
         'Car': 1,
-        'Van': 1,
+        'truck': 3,
         'Truck': 1,
+        'bike': 2,
 
+        'Pedestrian': 0,
+        'Person_sitting': 0,
+        'Van': 1,
         'Cyclist': 2,
-
         'Misc' : 0,
         'Tram' : 0,
         'parking ouster 2': 1,
@@ -274,5 +275,5 @@ def class_name_to_label(classname):
     return class_to_label[classname]
 
 def label_to_class_name(label):
-    class_list = ["Pedestrian", "Car", "Cyclist"]
+    class_list = ["Pedestrian", "Car", "Cyclist", "Truck"]
     return class_list[label]

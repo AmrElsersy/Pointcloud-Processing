@@ -85,7 +85,6 @@ def convert_oustar_to_kitti(args):
     for i in range(len(oustar)):
         pointcloud, labels = oustar[i]
 
-
         n_digits = len(str(name_i))
         name_str = (6-n_digits) * '0' + str(name_i)
 

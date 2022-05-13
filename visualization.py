@@ -95,7 +95,7 @@ class Visualizer:
             self.__draw_bev_box3d(BEV, obj.bbox_3d, color, calib)
 
             # if abs(obj.bbox_3d.rotation) > 0.1:
-            print("rotation= ", obj.bbox_3d.rotation, ' .. width=', obj.bbox_3d.width, ' .. length=', obj.bbox_3d.length)
+            print(obj.label, " rotation= ", obj.bbox_3d.rotation, ' .. width=', obj.bbox_3d.width, ' .. length=', obj.bbox_3d.length)
         print("===========================")
 
         # # 3D Boxes of dataset labels
@@ -114,7 +114,7 @@ class Visualizer:
 
         # Preprocessing for viz.
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-        image = Image.fromarray(image)
+        # image = Image.fromarray(image)
 
         self.current_image = image
 
@@ -178,10 +178,10 @@ class Visualizer:
         c2 = BEVutils.corner_to_bev_coord(corners[2])
         c3 = BEVutils.corner_to_bev_coord(corners[3])
 
-        cv2.line(bev, (c0[0], c0[1]), (c1[0], c1[1]), color, self.thickness)
+        # cv2.line(bev, (c0[0], c0[1]), (c1[0], c1[1]), color, self.thickness)
+        cv2.line(bev, (c0[0], c0[1]), (c1[0], c1[1]), (0,0,255), self.thickness)
         cv2.line(bev, (c0[0], c0[1]), (c2[0], c2[1]), color, self.thickness)
-        cv2.line(bev, (c3[0], c3[1]), (c1[0], c1[1]), (0,0,255), self.thickness)
-        # cv2.line(bev, (c3[0], c3[1]), (c1[0], c1[1]), color, self.thickness)
+        cv2.line(bev, (c3[0], c3[1]), (c1[0], c1[1]), color, self.thickness)
         cv2.line(bev, (c3[0], c3[1]), (c2[0], c2[1]), color, self.thickness)
 
     def __bev_to_colored_bev(self, bev):
@@ -240,8 +240,10 @@ class Visualizer:
             # model output is z center but dataset annotations consider z at the bottom
             z = point[0,2] + h/2
 
-            # angle in annotations is inverted .. while angle in predictions is correct
-            angle = -angle
+        # ========================== IMPORTANT ===============================
+        # just for seek of visualization we converrt the angle, if you visualized the output of the model it maybe inverted
+        # angle in annotations is inverted .. while angle in predictions is correct
+        angle = -angle
 
         # convert (x,y,z) from center to top left corner (corner 0)
         x = x - w/2
@@ -341,11 +343,10 @@ class Visualizer:
                     line_width=2, color=clr, figure=self.figure)
 
         elif vis_mode == VisMode.SCENE_2D:
-            draw_ = ImageDraw.Draw(self.current_image, mode='RGB')
-            # cv2.line(self.current_image, (corner1[x], corner1[y]), (corner2[x], corner2[y]), \
-                # color=tuple([255 * x for x in clr]), thickness=2)
-            draw_.line(xy=[(corner1[x], corner1[y]), (corner2[x], corner2[y])], \
-                fill=clr, width=self.thickness)
+            corner1 = corner1.astype(np.int32)
+            corner2 = corner2.astype(np.int32)
+            cv2.line(self.current_image, (corner1[x], corner1[y]), (corner2[x], corner2[y]), \
+                color=tuple([255 * x for x in clr]), thickness=2)
 
     def __draw_text_2D(self, text, point, bbox_volume, color=(255, 255, 255), font_scale=0.4, thickness=2, font=cv2.FONT_HERSHEY_SIMPLEX):
         # cv2.putText(self.current_image, text, point, font, font_scale, color, thickness)
@@ -367,6 +368,7 @@ class Visualizer:
             (0.2, 0.0, 1),
             (0.3,0.9,0.1),
             (1,1,0.3),
+            (0, 1, 1)
         ]
 
         return colors[class_id]
