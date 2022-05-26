@@ -260,8 +260,9 @@ def class_name_to_label(classname):
         'car':1,
         'Car': 1,
         'truck': 3,
-        'Truck': 1,
+        'Truck': 3,
         'bike': 2,
+        "Bus": 4,
 
         'Pedestrian': 0,
         'Person_sitting': 0,
@@ -275,5 +276,5 @@ def class_name_to_label(classname):
     return class_to_label[classname]
 
 def label_to_class_name(label):
-    class_list = ["Pedestrian", "Car", "Cyclist", "Truck"]
+    class_list = ["Pedestrian", "Car", "Cyclist", "Truck", "Bus"]
     return class_list[label]

@@ -95,7 +95,7 @@ class Visualizer:
             self.__draw_bev_box3d(BEV, obj.bbox_3d, color, calib)
 
             # if abs(obj.bbox_3d.rotation) > 0.1:
-            print(obj.label, " rotation= ", obj.bbox_3d.rotation, ' .. width=', obj.bbox_3d.width, ' .. length=', obj.bbox_3d.length)
+            print(obj.label, " rotation= ", obj.bbox_3d.rotation, ' .. width=', obj.bbox_3d.width, ' .. length=', obj.bbox_3d.length, " .. height=", obj.bbox_3d.height)
         print("===========================")
 
         # # 3D Boxes of dataset labels
@@ -368,7 +368,8 @@ class Visualizer:
             (0.2, 0.0, 1),
             (0.3,0.9,0.1),
             (1,1,0.3),
-            (0, 1, 1)
+            (0, 1, 1),
+            (1, 1, 1)
         ]
 
         return colors[class_id]
@@ -411,6 +412,9 @@ def kitti(path='../training/kitti'):
     dataset = KittiDataset(path)
     visualizer = Visualizer()
     print(len(dataset))
+
+    # indices = [100, 29, 84, 65, 133]
+    # for i in indices:
     for i in range(len(dataset)):
         image, pointcloud, labels, calib = dataset[i]
         # visualizer.visualize_scene_3D(pointcloud, labels)
@@ -427,7 +431,9 @@ def ouster(path= '../training/', mode = 'bev'):
     dataset = OustarDataset(path)
     visualizer = Visualizer()
 
-    for i in range(len(dataset)):
+    # indices = [152, 161, 10, 144, 104, 100, 29, 84, 65, 133]
+    # for i in indices:
+    for i in range(200, len(dataset)):
         pointcloud, labels = dataset[i]
 
         if mode == '3d':
