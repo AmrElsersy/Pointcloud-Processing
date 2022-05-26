@@ -1,7 +1,7 @@
-import pwd
-from pydoc import describe
+import random
 import cv2
 import numpy as np
+from torch import rand
 from oustar_dataset import OustarDataset
 import argparse
 import os
@@ -72,8 +72,8 @@ def save_image(images_path, name_str):
     cv2.imwrite(full_path, image)
 
 def convert_oustar_to_kitti(args, kitti_path, indices):
-    oustar_path = args.oustar_path
-    oustar = OustarDataset(oustar_path)
+    ouster_path = args.ouster_path
+    oustar = OustarDataset(ouster_path)
 
     pointclouds_path = os.path.join(kitti_path, 'velodyne')
     labels_path = os.path.join(kitti_path, 'label_2')
@@ -97,11 +97,14 @@ def convert_oustar_to_kitti(args, kitti_path, indices):
 def main(args):
     split_percentage = args.split
     kitti_path = args.kitti_path
-    ouster = OustarDataset(args.oustar_path)
+    ouster = OustarDataset(args.ouster_path)
 
     N = len(ouster)
-    indices = range(N)
+    indices = list(range(N))
     last_train_index = int(N * split_percentage)
+
+    # shuffle the indices
+    random.shuffle(indices)
 
     train_indices = indices[0: last_train_index]
     test_indices = indices[last_train_index:]
@@ -111,9 +114,9 @@ def main(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--oustar_path', type=str, default='./oustar')
+    parser.add_argument('--ouster_path', type=str, default='./oustar')
     parser.add_argument('--kitti_path', type=str, default='./kitti')
-    parser.add_argument('--split', type=float, default=0.9)
+    parser.add_argument('--split', type=float, default=0.95)
     args = parser.parse_args()
 
     main(args)
